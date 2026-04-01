@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LLM Timeline | Tokens, Context, and How People Actually Work</title>
+    <meta
+      name="description"
+      content="A visual timeline of LLM development, milestones, and modern workflow patterns centered on tokens, context windows, and what the model actually sees."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow" id="hero-eyebrow">A visual field guide to modern LLM work</p>
+          <h1 id="hero-title">The story is not magic. It is context.</h1>
+          <p class="hero__lede" id="hero-lede">
+            Scroll from ChatGPT 3.5 to modern agent workflows and keep one mental model
+            in view the whole time: an LLM only works with the tokens placed inside its
+            current context window.
+          </p>
+        </div>
+        <div class="hero__actions">
+          <button
+            class="boomer-button"
+            id="boomer-button"
+            type="button"
+            aria-pressed="false"
+          >
+            <span class="boomer-button__label" id="boomer-label">Boomer Button</span>
+            <span class="boomer-button__hint" id="boomer-hint">Switch to 1950s ELI5 mode</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="layout">
+        <aside class="context-panel">
+          <div class="context-panel__sticky">
+            <div class="context-panel__intro">
+              <p class="eyebrow" id="core-eyebrow">Persistent lens</p>
+              <h2 id="core-title">What the model can hold right now</h2>
+              <p id="core-summary">
+                The chamber below stands in for the context window. As the timeline moves,
+                the chamber grows, the token stream thickens, and new kinds of instructions
+                arrive around it.
+              </p>
+            </div>
+
+            <section class="concept-grid" id="concept-grid" aria-label="Core concepts"></section>
+
+            <section class="context-core" aria-labelledby="core-visual-title">
+              <div class="context-core__header">
+                <p class="eyebrow" id="core-visual-title">Context core</p>
+                <div class="context-core__stats">
+                  <span class="stat" id="window-stat">Window: compact</span>
+                  <span class="stat" id="token-stat">Token load: modest</span>
+                </div>
+              </div>
+
+              <div class="core-visual" id="core-visual">
+                <div class="flow-lane flow-lane--incoming">
+                  <div class="flow-lane__header">
+                    <p class="flow-label" id="incoming-label">Loaded into context</p>
+                    <p class="flow-caption" id="visual-caption">
+                      These are the items currently earning space in the window.
+                    </p>
+                  </div>
+                  <div class="flow-lane__items" id="incoming-items" aria-live="polite"></div>
+                </div>
+
+                <div class="window-stage">
+                  <div class="window-stage__summary">
+                    <p class="flow-label" id="window-stage-label">Inside the window now</p>
+                    <div class="window-meter" aria-hidden="true">
+                      <div class="window-meter__fill" id="window-meter-fill"></div>
+                    </div>
+                    <p class="flow-caption" id="window-stage-note">
+                      Useful context fills the window. Irrelevant material stays out.
+                    </p>
+                  </div>
+
+                  <div class="core-visual__shell">
+                    <div class="core-visual__ring" id="window-ring"></div>
+                    <div class="core-visual__inner">
+                      <div class="token-rack" id="token-rack" aria-hidden="true"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flow-lane flow-lane--objective">
+                  <div class="flow-lane__header">
+                    <p class="flow-label" id="objective-label">Current job</p>
+                  </div>
+                  <div class="objective-pill" id="objective-pill"></div>
+                </div>
+
+                <div class="overflow-bin">
+                  <p class="overflow-bin__title" id="overflow-title">Outside the window</p>
+                  <div class="overflow-bin__items" id="overflow-items"></div>
+                </div>
+              </div>
+
+              <div class="context-core__notes">
+                <article class="note-card">
+                  <h3 id="model-sees-title">What the model sees</h3>
+                  <p id="model-sees-copy"></p>
+                </article>
+                <article class="note-card">
+                  <h3 id="window-matters-title">Why the window matters</h3>
+                  <p id="window-matters-copy"></p>
+                </article>
+              </div>
+            </section>
+
+            <section class="glossary-panel" aria-labelledby="glossary-title">
+              <div class="glossary-panel__header">
+                <p class="eyebrow">Active vocabulary</p>
+                <h3 id="glossary-title">Terms in play</h3>
+              </div>
+              <div class="glossary-panel__chips" id="glossary-panel"></div>
+            </section>
+          </div>
+        </aside>
+
+        <section class="timeline" aria-label="LLM timeline">
+          <div class="timeline__rail" aria-hidden="true"></div>
+          <div class="timeline__cards" id="timeline-cards"></div>
+        </section>
+      </main>
+    </div>
+
+    <noscript>
+      <p class="noscript-note">
+        This page uses a small amount of JavaScript to sync the context visual with the
+        active timeline milestone.
+      </p>
+    </noscript>
+
+    <script src="script.js"></script>
+  </body>
+</html>
