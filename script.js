@@ -820,6 +820,7 @@ const elements = {
   coreEyebrow: document.getElementById("core-eyebrow"),
   coreTitle: document.getElementById("core-title"),
   coreSummary: document.getElementById("core-summary"),
+  activeEra: document.getElementById("active-era"),
   incomingLabel: document.getElementById("incoming-label"),
   visualCaption: document.getElementById("visual-caption"),
   windowStageLabel: document.getElementById("window-stage-label"),
@@ -1096,6 +1097,43 @@ function updateCardStates() {
   });
 }
 
+function captureViewportAnchor() {
+  const activeCard = cardMap.get(activeId);
+
+  if (!activeCard) {
+    return null;
+  }
+
+  return {
+    id: activeId,
+    top: activeCard.getBoundingClientRect().top
+  };
+}
+
+function restoreViewportAnchor(anchor) {
+  if (!anchor) {
+    queueScrollSync();
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    const restoredCard = cardMap.get(anchor.id);
+
+    if (!restoredCard) {
+      queueScrollSync();
+      return;
+    }
+
+    const delta = restoredCard.getBoundingClientRect().top - anchor.top;
+
+    if (Math.abs(delta) > 1) {
+      window.scrollBy(0, delta);
+    }
+
+    queueScrollSync();
+  });
+}
+
 function activateMilestone(id) {
   const item = milestones.find((entry) => entry.id === id);
   const visual = milestoneVisuals[id];
@@ -1106,6 +1144,7 @@ function activateMilestone(id) {
 
   activeId = id;
   document.body.style.setProperty("--accent", item.accent);
+  elements.activeEra.textContent = `${item.year} · ${item.era}`;
   elements.windowRing.style.setProperty("--window-scale", item.windowScale);
   elements.windowMeterFill.style.width = `${Math.round(visual.pressure * 100)}%`;
   elements.windowStat.textContent = `${boomerMode ? "Desk" : "Window"}: ${item.windowLabel}`;
@@ -1166,13 +1205,14 @@ function queueScrollSync() {
 }
 
 function syncMode() {
+  const anchor = captureViewportAnchor();
   document.body.classList.toggle("boomer-mode", boomerMode);
   elements.boomerButton.setAttribute("aria-pressed", String(boomerMode));
   renderUiCopy();
   renderConcepts();
   renderTimeline();
   activateMilestone(activeId);
-  queueScrollSync();
+  restoreViewportAnchor(anchor);
 }
 
 elements.boomerButton.addEventListener("click", () => {

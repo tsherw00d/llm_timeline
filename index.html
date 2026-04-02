@@ -12,6 +12,18 @@
   </head>
   <body>
     <div class="page-shell">
+      <div class="page-controls" role="region" aria-label="Reading controls">
+        <button
+          class="boomer-button"
+          id="boomer-button"
+          type="button"
+          aria-pressed="false"
+        >
+          <span class="boomer-button__label" id="boomer-label">Boomer Button</span>
+          <span class="boomer-button__hint" id="boomer-hint">Switch to 1950s ELI5 mode</span>
+        </button>
+      </div>
+
       <header class="hero">
         <div class="hero__copy">
           <p class="eyebrow" id="hero-eyebrow">A visual field guide to modern LLM work</p>
@@ -22,267 +34,272 @@
             current context window.
           </p>
         </div>
-        <div class="hero__actions">
-          <button
-            class="boomer-button"
-            id="boomer-button"
-            type="button"
-            aria-pressed="false"
-          >
-            <span class="boomer-button__label" id="boomer-label">Boomer Button</span>
-            <span class="boomer-button__hint" id="boomer-hint">Switch to 1950s ELI5 mode</span>
-          </button>
-        </div>
       </header>
+
+      <section class="concept-strip" aria-labelledby="concept-strip-title">
+        <div class="concept-strip__intro">
+          <p class="eyebrow">Quick primer</p>
+          <h2 id="concept-strip-title">Four ideas to keep in view while you scroll</h2>
+        </div>
+        <div class="concept-grid" id="concept-grid" aria-label="Core concepts">
+          <article class="concept-card" id="concept-tokens">
+            <h3>Tokens</h3>
+            <p>
+              Tokens are bite-sized word pieces. Billing, memory use, and model limits
+              are usually counted in tokens, not words.
+            </p>
+          </article>
+          <article class="concept-card" id="concept-window">
+            <h3>Context Window</h3>
+            <p>
+              The context window is the finite amount of token material the model can
+              actively consider in one pass.
+            </p>
+          </article>
+          <article class="concept-card" id="concept-cutoff">
+            <h3>Cutoff Date</h3>
+            <p>
+              A cutoff date marks how recent the model's built-in training knowledge is.
+              New facts usually need live tools or retrieved documents.
+            </p>
+          </article>
+          <article class="concept-card" id="concept-parameters">
+            <h3>Parameters</h3>
+            <p>
+              Parameters are the learned weights inside the model. User controls can
+              steer behavior, but they do not rewrite those weights on the fly.
+            </p>
+          </article>
+        </div>
+      </section>
 
       <main class="layout">
         <aside class="context-panel">
           <div class="context-panel__sticky">
-            <div class="context-panel__intro">
-              <p class="eyebrow" id="core-eyebrow">Persistent lens</p>
-              <h2 id="core-title">What the model can hold right now</h2>
-              <p id="core-summary">
-                The chamber below stands in for the context window. As the timeline moves,
-                the chamber grows, the token stream thickens, and new kinds of instructions
-                arrive around it.
-              </p>
-            </div>
-
-            <section class="concept-grid" id="concept-grid" aria-label="Core concepts">
-              <article class="concept-card" id="concept-tokens">
-                <h3>Tokens</h3>
-                <p>
-                  Tokens are bite-sized word pieces. Billing, memory use, and model limits
-                  are usually counted in tokens, not words.
-                </p>
-              </article>
-              <article class="concept-card" id="concept-window">
-                <h3>Context Window</h3>
-                <p>
-                  The context window is the finite amount of token material the model can
-                  actively consider in one pass.
-                </p>
-              </article>
-              <article class="concept-card" id="concept-cutoff">
-                <h3>Cutoff Date</h3>
-                <p>
-                  A cutoff date marks how recent the model's built-in training knowledge is.
-                  New facts usually need live tools or retrieved documents.
-                </p>
-              </article>
-              <article class="concept-card" id="concept-parameters">
-                <h3>Parameters</h3>
-                <p>
-                  Parameters are the learned weights inside the model. User controls can
-                  steer behavior, but they do not rewrite those weights on the fly.
-                </p>
-              </article>
-            </section>
-
-            <section class="context-core" aria-labelledby="core-visual-title">
-              <div class="context-core__header">
-                <p class="eyebrow" id="core-visual-title">Context core</p>
-                <div class="context-core__stats">
-                  <span class="stat" id="window-stat">Window: compact</span>
-                  <span class="stat" id="token-stat">Token load: modest</span>
+            <section class="teaching-module" aria-labelledby="core-title">
+              <div class="context-panel__intro">
+                <div class="context-panel__heading">
+                  <div>
+                    <p class="eyebrow" id="core-eyebrow">Persistent lens</p>
+                    <p class="context-panel__tracking">
+                      Active milestone
+                      <span id="active-era">2022.11 · ChatGPT lands</span>
+                    </p>
+                  </div>
+                  <div class="context-core__stats">
+                    <span class="stat" id="window-stat">Window: compact</span>
+                    <span class="stat" id="token-stat">Token load: modest</span>
+                  </div>
                 </div>
+                <h2 id="core-title">What the model can hold right now</h2>
+                <p id="core-summary">
+                  The chamber below stands in for the context window. As the timeline moves,
+                  the chamber grows, the token stream thickens, and new kinds of instructions
+                  arrive around it.
+                </p>
               </div>
 
-              <div class="core-visual" id="core-visual">
-                <div class="flow-lane flow-lane--incoming">
-                  <div class="flow-lane__header">
-                    <p class="flow-label" id="incoming-label">Loaded into context</p>
-                    <p class="flow-caption" id="visual-caption">
-                      These are the items currently earning space in the window.
-                    </p>
-                  </div>
-                  <div class="flow-lane__items" id="incoming-items" aria-live="polite">
-                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
-                      >system framing</span
-                    >
-                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
-                      >chat history</span
-                    >
-                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
-                      >user prompt</span
-                    >
-                  </div>
+              <section class="context-core" aria-labelledby="core-visual-title">
+                <div class="context-core__header">
+                  <p class="eyebrow" id="core-visual-title">Context core</p>
                 </div>
 
-                <div class="window-stage">
-                  <div class="window-stage__summary">
-                    <p class="flow-label" id="window-stage-label">Inside the window now</p>
-                    <div class="window-meter" aria-hidden="true">
-                      <div
-                        class="window-meter__fill"
-                        id="window-meter-fill"
-                        style="width: 70%"
-                      ></div>
+                <div class="core-visual" id="core-visual">
+                  <div class="flow-lane flow-lane--incoming">
+                    <div class="flow-lane__header">
+                      <p class="flow-label" id="incoming-label">Loaded into context</p>
+                      <p class="flow-caption" id="visual-caption">
+                        These are the items currently earning space in the window.
+                      </p>
                     </div>
-                    <p class="flow-caption" id="window-stage-note">
-                      High-value context is using about 70% of the available window right now.
-                    </p>
-                  </div>
-
-                  <div class="core-visual__shell">
-                    <div
-                      class="core-visual__ring"
-                      id="window-ring"
-                      style="--window-scale: 0.76"
-                    ></div>
-                    <div class="orbit-layer" id="orbit-layer" aria-hidden="true">
-                      <span
-                        class="orbit-object is-visible"
-                        style="
-                          --orbit-x: -8rem;
-                          --orbit-y: -6rem;
-                          --orbit-start-x: -14rem;
-                          --orbit-start-y: -12rem;
-                          border-color: #f3b74b66;
-                        "
-                        >user prompt</span
-                      >
-                      <span
-                        class="orbit-object is-visible"
-                        style="
-                          --orbit-x: 8rem;
-                          --orbit-y: -4rem;
-                          --orbit-start-x: 15rem;
-                          --orbit-start-y: -11rem;
-                          border-color: #f3b74b66;
-                        "
-                        >assistant reply</span
-                      >
-                      <span
-                        class="orbit-object is-visible"
-                        style="
-                          --orbit-x: 0rem;
-                          --orbit-y: 7rem;
-                          --orbit-start-x: 0rem;
-                          --orbit-start-y: 14rem;
-                          border-color: #f3b74b66;
-                        "
+                    <div class="flow-lane__items" id="incoming-items" aria-live="polite">
+                      <span class="context-chip is-visible" style="border-color: #f3b74b55"
                         >system framing</span
                       >
+                      <span class="context-chip is-visible" style="border-color: #f3b74b55"
+                        >chat history</span
+                      >
+                      <span class="context-chip is-visible" style="border-color: #f3b74b55"
+                        >user prompt</span
+                      >
                     </div>
-                    <div class="core-visual__inner">
-                      <div class="token-rack" id="token-rack" aria-hidden="true">
-                        <div class="window-segment">
-                          <div class="window-segment__head">
-                            <span class="window-segment__label">system framing</span>
-                            <span class="window-segment__value">20%</span>
+                  </div>
+
+                  <div class="window-stage">
+                    <div class="window-stage__summary">
+                      <p class="flow-label" id="window-stage-label">Inside the window now</p>
+                      <div class="window-meter" aria-hidden="true">
+                        <div
+                          class="window-meter__fill"
+                          id="window-meter-fill"
+                          style="width: 70%"
+                        ></div>
+                      </div>
+                      <p class="flow-caption" id="window-stage-note">
+                        High-value context is using about 70% of the available window right now.
+                      </p>
+                    </div>
+
+                    <div class="core-visual__shell">
+                      <div
+                        class="core-visual__ring"
+                        id="window-ring"
+                        style="--window-scale: 0.76"
+                      ></div>
+                      <div class="orbit-layer" id="orbit-layer" aria-hidden="true">
+                        <span
+                          class="orbit-object is-visible"
+                          style="
+                            --orbit-x: -8rem;
+                            --orbit-y: -6rem;
+                            --orbit-start-x: -14rem;
+                            --orbit-start-y: -12rem;
+                            border-color: #f3b74b66;
+                          "
+                          >user prompt</span
+                        >
+                        <span
+                          class="orbit-object is-visible"
+                          style="
+                            --orbit-x: 8rem;
+                            --orbit-y: -4rem;
+                            --orbit-start-x: 15rem;
+                            --orbit-start-y: -11rem;
+                            border-color: #f3b74b66;
+                          "
+                          >assistant reply</span
+                        >
+                        <span
+                          class="orbit-object is-visible"
+                          style="
+                            --orbit-x: 0rem;
+                            --orbit-y: 7rem;
+                            --orbit-start-x: 0rem;
+                            --orbit-start-y: 14rem;
+                            border-color: #f3b74b66;
+                          "
+                          >system framing</span
+                        >
+                      </div>
+                      <div class="core-visual__inner">
+                        <div class="token-rack" id="token-rack" aria-hidden="true">
+                          <div class="window-segment">
+                            <div class="window-segment__head">
+                              <span class="window-segment__label">system framing</span>
+                              <span class="window-segment__value">20%</span>
+                            </div>
+                            <div class="window-segment__track">
+                              <div
+                                class="window-segment__fill window-segment__fill--instruction"
+                                style="--segment-width: 20%"
+                              ></div>
+                            </div>
                           </div>
-                          <div class="window-segment__track">
-                            <div
-                              class="window-segment__fill window-segment__fill--instruction"
-                              style="--segment-width: 20%"
-                            ></div>
+                          <div class="window-segment">
+                            <div class="window-segment__head">
+                              <span class="window-segment__label">chat history</span>
+                              <span class="window-segment__value">45%</span>
+                            </div>
+                            <div class="window-segment__track">
+                              <div
+                                class="window-segment__fill window-segment__fill--memory"
+                                style="--segment-width: 45%"
+                              ></div>
+                            </div>
                           </div>
-                        </div>
-                        <div class="window-segment">
-                          <div class="window-segment__head">
-                            <span class="window-segment__label">chat history</span>
-                            <span class="window-segment__value">45%</span>
-                          </div>
-                          <div class="window-segment__track">
-                            <div
-                              class="window-segment__fill window-segment__fill--memory"
-                              style="--segment-width: 45%"
-                            ></div>
-                          </div>
-                        </div>
-                        <div class="window-segment">
-                          <div class="window-segment__head">
-                            <span class="window-segment__label">user prompt</span>
-                            <span class="window-segment__value">35%</span>
-                          </div>
-                          <div class="window-segment__track">
-                            <div
-                              class="window-segment__fill window-segment__fill--task"
-                              style="--segment-width: 35%"
-                            ></div>
+                          <div class="window-segment">
+                            <div class="window-segment__head">
+                              <span class="window-segment__label">user prompt</span>
+                              <span class="window-segment__value">35%</span>
+                            </div>
+                            <div class="window-segment__track">
+                              <div
+                                class="window-segment__fill window-segment__fill--task"
+                                style="--segment-width: 35%"
+                              ></div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="flow-lane flow-lane--objective">
-                  <div class="flow-lane__header">
-                    <p class="flow-label" id="objective-label">Current job</p>
+                  <div class="flow-lane flow-lane--objective">
+                    <div class="flow-lane__header">
+                      <p class="flow-label" id="objective-label">Current job</p>
+                    </div>
+                    <div class="objective-pill" id="objective-pill">
+                      Hold the conversation together long enough to answer the latest request.
+                    </div>
                   </div>
-                  <div class="objective-pill" id="objective-pill">
-                    Hold the conversation together long enough to answer the latest request.
+
+                  <div class="overflow-bin">
+                    <p class="overflow-bin__title" id="overflow-title">Outside the window</p>
+                    <div class="overflow-bin__items" id="overflow-items">
+                      <span class="overflow-chip">older turns</span>
+                      <span class="overflow-chip">long attachments</span>
+                    </div>
                   </div>
                 </div>
 
-                <div class="overflow-bin">
-                  <p class="overflow-bin__title" id="overflow-title">Outside the window</p>
-                  <div class="overflow-bin__items" id="overflow-items">
-                    <span class="overflow-chip">older turns</span>
-                    <span class="overflow-chip">long attachments</span>
+                <div class="context-core__notes">
+                  <article class="note-card">
+                    <h3 id="model-sees-title">What the model sees</h3>
+                    <p id="model-sees-copy">
+                      The model sees the chat transcript that still fits in the window: your
+                      latest request plus some earlier turns, chopped into tokens.
+                    </p>
+                  </article>
+                  <article class="note-card">
+                    <h3 id="window-matters-title">Why the window matters</h3>
+                    <p id="window-matters-copy">
+                      When the early window fills up, old instructions fall away or get
+                      compressed. That is why early chat sessions could lose the thread.
+                    </p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="glossary-panel" aria-labelledby="glossary-title">
+                <div class="glossary-panel__header">
+                  <p class="eyebrow">Active vocabulary</p>
+                  <div>
+                    <h3 id="glossary-title">Terms in play</h3>
+                    <p class="glossary-panel__lede" id="glossary-lede">
+                      Each term is restated in plain language before the jargon gets reused.
+                    </p>
                   </div>
                 </div>
-              </div>
-
-              <div class="context-core__notes">
-                <article class="note-card">
-                  <h3 id="model-sees-title">What the model sees</h3>
-                  <p id="model-sees-copy">
-                    The model sees the chat transcript that still fits in the window: your
-                    latest request plus some earlier turns, chopped into tokens.
-                  </p>
-                </article>
-                <article class="note-card">
-                  <h3 id="window-matters-title">Why the window matters</h3>
-                  <p id="window-matters-copy">
-                    When the early window fills up, old instructions fall away or get
-                    compressed. That is why early chat sessions could lose the thread.
-                  </p>
-                </article>
-              </div>
-            </section>
-
-            <section class="glossary-panel" aria-labelledby="glossary-title">
-              <div class="glossary-panel__header">
-                <p class="eyebrow">Active vocabulary</p>
-                <div>
-                  <h3 id="glossary-title">Terms in play</h3>
-                  <p class="glossary-panel__lede" id="glossary-lede">
-                    Each term is restated in plain language before the jargon gets reused.
-                  </p>
+                <div class="glossary-panel__chips" id="glossary-panel">
+                  <article class="glossary-chip">
+                    <span class="glossary-chip__term">tokens</span>
+                    <p class="glossary-chip__copy">
+                      Tiny chunks of text the model counts and processes, often smaller than
+                      full words.
+                    </p>
+                  </article>
+                  <article class="glossary-chip">
+                    <span class="glossary-chip__term">context window</span>
+                    <p class="glossary-chip__copy">
+                      The total token space the model can actively pay attention to in one pass.
+                    </p>
+                  </article>
+                  <article class="glossary-chip">
+                    <span class="glossary-chip__term">cutoff date</span>
+                    <p class="glossary-chip__copy">
+                      The point after which the model's built-in training knowledge stops being
+                      reliably current.
+                    </p>
+                  </article>
+                  <article class="glossary-chip">
+                    <span class="glossary-chip__term">chat transcript</span>
+                    <p class="glossary-chip__copy">
+                      The running conversation history that still fits inside the current
+                      window.
+                    </p>
+                  </article>
                 </div>
-              </div>
-              <div class="glossary-panel__chips" id="glossary-panel">
-                <article class="glossary-chip">
-                  <span class="glossary-chip__term">tokens</span>
-                  <p class="glossary-chip__copy">
-                    Tiny chunks of text the model counts and processes, often smaller than
-                    full words.
-                  </p>
-                </article>
-                <article class="glossary-chip">
-                  <span class="glossary-chip__term">context window</span>
-                  <p class="glossary-chip__copy">
-                    The total token space the model can actively pay attention to in one pass.
-                  </p>
-                </article>
-                <article class="glossary-chip">
-                  <span class="glossary-chip__term">cutoff date</span>
-                  <p class="glossary-chip__copy">
-                    The point after which the model's built-in training knowledge stops being
-                    reliably current.
-                  </p>
-                </article>
-                <article class="glossary-chip">
-                  <span class="glossary-chip__term">chat transcript</span>
-                  <p class="glossary-chip__copy">
-                    The running conversation history that still fits inside the current
-                    window.
-                  </p>
-                </article>
-              </div>
+              </section>
             </section>
           </div>
         </aside>

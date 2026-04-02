@@ -64,6 +64,7 @@ body.boomer-mode {
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
 }
 
 body {
@@ -94,18 +95,22 @@ select {
 }
 
 .page-shell {
-  width: min(1400px, calc(100vw - 2rem));
+  width: min(1380px, calc(100vw - 2.5rem));
   margin: 0 auto;
-  padding: 1.2rem 0 4rem;
+  padding: 5.5rem 0 6rem;
+}
+
+.page-controls {
+  position: fixed;
+  top: 1rem;
+  right: clamp(1rem, 3vw, 2.5rem);
+  z-index: 20;
+  width: min(18rem, calc(100vw - 2rem));
 }
 
 .hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1.5rem;
-  align-items: start;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
+  margin-bottom: 2.75rem;
+  padding: 0 0 0.75rem;
 }
 
 .eyebrow {
@@ -147,18 +152,11 @@ select {
 
 .hero__lede {
   max-width: 58ch;
-  margin: 1rem 0 0;
-}
-
-.hero__actions {
-  display: flex;
-  justify-content: flex-end;
+  margin: 1.15rem 0 0;
 }
 
 .boomer-button {
-  position: sticky;
-  top: 1rem;
-  min-width: 14rem;
+  min-width: 14.5rem;
   border: 1px solid var(--line);
   background:
     linear-gradient(135deg, rgba(243, 183, 75, 0.14), rgba(70, 192, 181, 0.08)),
@@ -195,25 +193,40 @@ select {
 .boomer-button__hint {
   display: block;
   color: var(--muted);
-  font-size: 0.96rem;
+  font-size: 0.9rem;
+}
+
+.concept-strip {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 4.5rem;
+}
+
+.concept-strip__intro {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 36rem;
+}
+
+.concept-strip h2 {
+  margin: 0;
+  font-family: var(--hero-font);
+  font-size: clamp(1.6rem, 2.6vw, 2.5rem);
+  line-height: 0.98;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(0, 1.1fr);
-  gap: 2rem;
+  grid-template-columns: minmax(350px, 420px) minmax(0, 1fr);
+  gap: clamp(2.2rem, 4vw, 4.5rem);
 }
 
 .context-panel__sticky {
   position: sticky;
-  top: 1rem;
-  display: grid;
-  gap: 1.2rem;
+  top: 6rem;
 }
 
-.concept-grid,
-.context-core,
-.glossary-panel,
+.teaching-module,
 .timeline-card {
   border: 1px solid var(--line);
   background: var(--surface);
@@ -223,17 +236,14 @@ select {
 
 .concept-grid {
   display: grid;
-  gap: 0.9rem;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  border-radius: var(--radius-lg);
-  padding: 1rem;
+  gap: 0.85rem 1.1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .concept-card {
-  border: 1px solid var(--line);
-  border-radius: 1.1rem;
-  padding: 1rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
+  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
 }
 
 .concept-card h3 {
@@ -247,15 +257,61 @@ select {
   font-size: 0.95rem;
 }
 
+.teaching-module {
+  display: grid;
+  gap: 1.35rem;
+  padding: 1.35rem;
+  border-radius: min(2rem, 6vw);
+  max-height: calc(100vh - 7.25rem);
+  overflow: auto;
+  scrollbar-width: thin;
+}
+
+.context-panel__intro {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.context-panel__heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+
+.context-panel__tracking {
+  margin: 0.3rem 0 0;
+  font-family: var(--mono-font);
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.context-panel__tracking span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--text);
+}
+
+.context-panel h2 {
+  margin: 0;
+  font-size: clamp(2.1rem, 3.4vw, 3.2rem);
+}
+
+#core-summary {
+  margin: 0;
+}
+
 .context-core {
-  border-radius: min(2rem, 7vw);
-  padding: 1.2rem;
+  display: grid;
+  gap: 1rem;
 }
 
 .context-core__header,
 .glossary-panel__header {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 1rem;
   align-items: end;
 }
@@ -264,6 +320,7 @@ select {
   display: flex;
   gap: 0.55rem;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .stat,
@@ -279,12 +336,13 @@ select {
 
 .core-visual {
   position: relative;
-  min-height: 30rem;
-  margin: 1rem 0 0.75rem;
-  overflow: hidden;
-  border-radius: 1.7rem;
+  display: grid;
+  gap: 1rem;
+  min-height: clamp(22rem, 44vh, 27rem);
+  margin: 0;
+  border-radius: 1.5rem;
   border: 1px solid var(--line);
-  padding: 1rem;
+  padding: 1rem 1rem 1.1rem;
   background:
     radial-gradient(circle at center, rgba(255, 255, 255, 0.05), transparent 40%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 30%),
@@ -301,19 +359,17 @@ body.boomer-mode .core-visual {
 .flow-lane {
   position: relative;
   z-index: 1;
-  border: 1px solid var(--line);
-  border-radius: 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
-  padding: 0.8rem;
+  padding: 0;
 }
 
 .flow-lane--incoming {
-  margin-bottom: 0.85rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .flow-lane--objective {
-  margin-top: 0.85rem;
-  margin-bottom: 5.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--line);
 }
 
 .flow-lane__header {
@@ -321,7 +377,7 @@ body.boomer-mode .core-visual {
   justify-content: space-between;
   gap: 0.75rem;
   align-items: baseline;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.65rem;
 }
 
 .flow-label {
@@ -351,12 +407,11 @@ body.boomer-mode .core-visual {
 .context-chip {
   border-radius: 999px;
   border: 1px solid var(--line);
-  padding: 0.45rem 0.72rem;
+  padding: 0.4rem 0.7rem;
   font-family: var(--mono-font);
   font-size: 0.76rem;
-  background: var(--surface-strong);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text);
-  box-shadow: var(--panel-shadow);
   transform: translateY(0.8rem) scale(0.94);
   opacity: 0;
   transition: transform 320ms ease, opacity 240ms ease;
@@ -374,10 +429,10 @@ body.boomer-mode .core-visual {
 
 .window-stage {
   position: relative;
-  min-height: 16.5rem;
+  min-height: 15rem;
   display: grid;
-  grid-template-columns: minmax(0, 0.48fr) minmax(14rem, 1fr);
-  gap: 0.9rem;
+  grid-template-columns: minmax(0, 0.42fr) minmax(13rem, 1fr);
+  gap: 1rem;
   align-items: center;
 }
 
@@ -388,7 +443,7 @@ body.boomer-mode .core-visual {
 }
 
 .window-meter {
-  height: 0.9rem;
+  height: 0.8rem;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: rgba(255, 255, 255, 0.05);
@@ -405,7 +460,7 @@ body.boomer-mode .core-visual {
 
 .core-visual__shell {
   position: relative;
-  min-height: 16rem;
+  min-height: 14.5rem;
   display: grid;
   place-items: center;
 }
@@ -433,8 +488,8 @@ body.boomer-mode .core-visual {
   position: absolute;
   left: 50%;
   top: 50%;
-  max-width: 7.5rem;
-  padding: 0.42rem 0.66rem;
+  max-width: 6.8rem;
+  padding: 0.36rem 0.58rem;
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line));
   background:
@@ -446,7 +501,6 @@ body.boomer-mode .core-visual {
   line-height: 1.3;
   letter-spacing: 0.03em;
   text-align: center;
-  box-shadow: var(--panel-shadow);
   opacity: 0;
   transform:
     translate(-50%, -50%)
@@ -476,9 +530,9 @@ body.boomer-mode .core-visual__ring {
 
 .core-visual__inner {
   position: relative;
-  width: min(16rem, 50vw);
-  min-height: 10.8rem;
-  border-radius: 1.5rem;
+  width: min(15rem, 48vw);
+  min-height: 10rem;
+  border-radius: 1.35rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background:
     radial-gradient(circle at 35% 35%, rgba(243, 183, 75, 0.18), transparent 36%),
@@ -487,7 +541,7 @@ body.boomer-mode .core-visual__ring {
   display: grid;
   align-content: center;
   overflow: hidden;
-  padding: 0.95rem;
+  padding: 0.85rem;
 }
 
 body.boomer-mode .core-visual__inner {
@@ -582,25 +636,17 @@ body.boomer-mode .window-segment__fill--tool {
 }
 
 .objective-pill {
-  min-height: 3rem;
   display: flex;
   align-items: center;
-  padding: 0.85rem 1rem;
-  border-radius: 1.1rem;
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(135deg, rgba(243, 183, 75, 0.12), rgba(70, 192, 181, 0.06)),
-    rgba(255, 255, 255, 0.05);
+  padding: 0 0 0 1rem;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 70%, var(--line));
   font-family: var(--hero-font);
-  font-size: 1.1rem;
+  font-size: 1.14rem;
   line-height: 1.35;
 }
 
 .overflow-bin {
-  position: absolute;
-  left: 1rem;
-  right: 1rem;
-  bottom: 1rem;
+  position: static;
   border-top: 1px solid var(--line);
   padding-top: 0.8rem;
 }
@@ -628,19 +674,14 @@ body.boomer-mode .window-segment__fill--tool {
 
 .context-core__notes {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-}
-
-.note-card,
-.glossary-panel {
-  border-radius: var(--radius-lg);
+  gap: 0.9rem;
+  padding-top: 0.3rem;
 }
 
 .note-card {
-  padding: 1rem;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .note-card h3 {
@@ -654,7 +695,10 @@ body.boomer-mode .window-segment__fill--tool {
 }
 
 .glossary-panel {
-  padding: 1rem;
+  display: grid;
+  gap: 0.85rem;
+  padding-top: 0.15rem;
+  border-top: 1px solid var(--line);
 }
 
 .glossary-panel__lede {
@@ -671,18 +715,16 @@ body.boomer-mode .window-segment__fill--tool {
 }
 
 .glossary-panel__chips {
-  margin-top: 0.9rem;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.7rem;
 }
 
 .glossary-chip {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.8rem 0.9rem;
-  border-radius: 1rem;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.04);
+  gap: 0.2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: var(--text);
 }
 
@@ -703,7 +745,7 @@ body.boomer-mode .window-segment__fill--tool {
 
 .timeline {
   position: relative;
-  padding-left: 1.25rem;
+  padding-left: 1.45rem;
 }
 
 .timeline__rail {
@@ -718,15 +760,15 @@ body.boomer-mode .window-segment__fill--tool {
 
 .timeline__cards {
   display: grid;
-  gap: 5rem;
-  padding-bottom: 42vh;
+  gap: 6rem;
+  padding-bottom: 48vh;
 }
 
 .closing-frame {
-  margin-top: 2rem;
-  padding: 1.4rem;
-  border: 1px solid var(--line);
+  margin-top: 6rem;
+  padding: 1.75rem;
   border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
   background: var(--surface);
   backdrop-filter: blur(12px);
   box-shadow: var(--panel-shadow);
@@ -760,15 +802,14 @@ body.boomer-mode .window-segment__fill--tool {
 .closing-frame__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.9rem;
-  margin-top: 1.2rem;
+  gap: 1.1rem;
+  margin-top: 1.6rem;
 }
 
 .closing-note {
-  padding: 1rem;
-  border: 1px solid var(--line);
-  border-radius: 1.2rem;
-  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem 0 0;
+  border-top: 1px solid var(--line);
+  background: transparent;
 }
 
 .closing-note h3 {
@@ -783,10 +824,10 @@ body.boomer-mode .window-segment__fill--tool {
 
 .timeline-card {
   position: relative;
-  padding: 1.45rem;
+  padding: 1.65rem 1.75rem;
   border-radius: min(2rem, 6vw);
-  transform: translateY(var(--card-shift));
-  opacity: 0.48;
+  transform: translateY(calc(var(--card-shift) * 0.5));
+  opacity: 0.62;
   transition:
     transform 420ms ease,
     opacity 420ms ease,
@@ -810,7 +851,7 @@ body.boomer-mode .window-segment__fill--tool {
 .timeline-card.is-active {
   transform: translateY(0);
   opacity: 1;
-  border-color: rgba(243, 183, 75, 0.4);
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
   box-shadow: var(--shadow);
 }
 
@@ -838,23 +879,19 @@ body.boomer-mode .window-segment__fill--tool {
 }
 
 .timeline-card__what-changed {
-  margin: 0 0 1rem;
+  margin: 0 0 1.15rem;
   font-size: 1.1rem;
   line-height: 1.55;
 }
 
 .timeline-card__body {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.55rem;
 }
 
 .timeline-card__objective {
-  margin: 0 0 1rem;
-  padding: 0.95rem 1rem;
-  border: 1px solid color-mix(in srgb, var(--accent) 36%, var(--line));
-  border-radius: 1.1rem;
-  background:
-    linear-gradient(135deg, color-mix(in srgb, var(--accent) 10%, transparent), rgba(255, 255, 255, 0.03)),
-    rgba(255, 255, 255, 0.03);
+  margin: 0 0 1.35rem;
+  padding-left: 1rem;
+  border-left: 3px solid color-mix(in srgb, var(--accent) 68%, var(--line));
 }
 
 .timeline-card__objective-label {
@@ -870,22 +907,20 @@ body.boomer-mode .window-segment__fill--tool {
   margin: 0;
   color: var(--text);
   font-family: var(--hero-font);
-  font-size: 1.12rem;
+  font-size: 1.16rem;
   line-height: 1.35;
 }
 
 .timeline-card__explainers {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.8rem;
-  margin-bottom: 1rem;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
 }
 
 .timeline-card__explainer {
-  padding: 0.9rem;
-  border: 1px solid var(--line);
-  border-radius: 1.1rem;
-  background: rgba(255, 255, 255, 0.03);
+  padding-top: 0.9rem;
+  border-top: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
 }
 
 .timeline-card__explainer h4 {
@@ -907,7 +942,10 @@ body.boomer-mode .window-segment__fill--tool {
 }
 
 .timeline-card__tag {
-  background: rgba(255, 255, 255, 0.04);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
 }
 
 .noscript-note {
@@ -929,25 +967,33 @@ body.boomer-mode .window-segment__fill--tool {
     top: 0;
   }
 
-  .hero {
-    grid-template-columns: 1fr;
+  .teaching-module {
+    max-height: none;
+    overflow: visible;
   }
 
-  .hero__actions {
-    justify-content: flex-start;
+  .concept-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-controls {
+    right: 1rem;
   }
 }
 
 @media (max-width: 760px) {
   .page-shell {
     width: min(100vw - 1rem, 100%);
+    padding-top: 5rem;
+    padding-bottom: 8rem;
   }
 
   .hero,
-  .context-core,
-  .glossary-panel {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .concept-strip,
+  .layout,
+  .closing-frame {
+    padding-left: 0.2rem;
+    padding-right: 0.2rem;
   }
 
   .concept-grid,
@@ -955,6 +1001,26 @@ body.boomer-mode .window-segment__fill--tool {
   .timeline-card__explainers,
   .closing-frame__grid {
     grid-template-columns: 1fr;
+  }
+
+  .page-controls {
+    top: auto;
+    left: 1rem;
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .context-panel__heading {
+    flex-direction: column;
+    align-items: start;
+  }
+
+  .context-core__stats {
+    justify-content: flex-start;
+  }
+
+  .boomer-button {
+    width: 100%;
   }
 
   .core-visual {
@@ -984,7 +1050,7 @@ body.boomer-mode .window-segment__fill--tool {
   }
 
   .timeline-card {
-    padding: 1.1rem;
+    padding: 1.25rem;
   }
 
   .timeline-card::before {
