@@ -17,7 +17,26 @@ const uiCopy = {
     objectiveLabel: "Current job",
     overflowTitle: "Outside the window",
     modelSeesTitle: "What the model sees",
-    windowMattersTitle: "Why the window matters"
+    windowMattersTitle: "Why the window matters",
+    glossaryLede: "Each term is restated in plain language before the jargon gets reused.",
+    closingEyebrow: "Closing frame",
+    closingTitle: "Modern LLM work is context engineering in public.",
+    closingLede:
+      "Better tools do not repeal token limits. They help people choose, shape, and hand off the right context more deliberately.",
+    closingPoints: [
+      {
+        title: "The limit never left",
+        body: "Long windows, retrieval, tools, and agents all work by managing what enters the model's finite working set."
+      },
+      {
+        title: "Workflow beats mystique",
+        body: "Strong results usually come from clearer prompts, tighter evidence, smaller tasks, and cleaner handoffs rather than magic hidden powers."
+      },
+      {
+        title: "The core mechanism is still simple",
+        body: "Even when the surrounding system looks sophisticated, the model is still producing tokens from the context it can currently see."
+      }
+    ]
   },
   boomer: {
     heroEyebrow: "A plainspoken tour of how these machine minds are used",
@@ -37,7 +56,26 @@ const uiCopy = {
     objectiveLabel: "Clerk's job right now",
     overflowTitle: "Still out in the hallway",
     modelSeesTitle: "What the machine has in front of it",
-    windowMattersTitle: "Why desk space matters"
+    windowMattersTitle: "Why desk space matters",
+    glossaryLede: "Each shop term gets translated into plain talk before it shows up again.",
+    closingEyebrow: "Last note",
+    closingTitle: "Modern machine work is mostly about packing the desk well.",
+    closingLede:
+      "The fancy office gear does not remove the desk limit. It mostly helps people choose better papers, arrange them better, and pass cleaner packets from one clerk to the next.",
+    closingPoints: [
+      {
+        title: "The desk is still finite",
+        body: "Bigger desks, better filing tricks, and helper clerks still work by deciding what gets laid out in front of the machine."
+      },
+      {
+        title: "Good office habits matter more than mystique",
+        body: "Clear instructions, the right evidence, smaller jobs, and tidy memos do more than treating the machine like a wizard."
+      },
+      {
+        title: "The basic machine has not changed",
+        body: "Even with a lot of office machinery around it, the engine is still working from the word slips it can currently see."
+      }
+    ]
   }
 };
 
@@ -75,6 +113,181 @@ const concepts = [
       "Parameters are the machine's internal wiring. Turning a dial changes how it behaves, but it does not rebuild the motor."
   }
 ];
+
+const glossaryDefinitions = {
+  tokens: {
+    default: "Tiny chunks of text the model counts and processes, often smaller than full words.",
+    boomer: "Little paper slips the machine sorts through one piece at a time."
+  },
+  "context window": {
+    default: "The total token space the model can actively pay attention to in one pass.",
+    boomer: "The amount of desk space the clerk can use right now."
+  },
+  "cutoff date": {
+    default: "The point after which the model's built-in training knowledge stops being reliably current.",
+    boomer: "The last date printed in the encyclopedia sitting on the shelf."
+  },
+  "chat transcript": {
+    default: "The running conversation history that still fits inside the current window.",
+    boomer: "The stack of back-and-forth notes still lying on the desk."
+  },
+  "prompt engineering": {
+    default: "Deliberately shaping instructions so the model can infer the task, constraints, and output format clearly.",
+    boomer: "Writing a cleaner work ticket so the clerk knows exactly what job to do."
+  },
+  "few-shot examples": {
+    default: "Small example inputs and outputs that show the model what kind of answer you want.",
+    boomer: "Sample forms that show the clerk what a finished page should look like."
+  },
+  constraints: {
+    default: "Rules that limit the answer, such as length, tone, scope, or forbidden moves.",
+    boomer: "House rules telling the clerk what it must and must not do."
+  },
+  "formatting cues": {
+    default: "Labels, delimiters, and structure that help the model parse the request correctly.",
+    boomer: "Tabs and headings that keep the paperwork from getting mixed up."
+  },
+  "128K context": {
+    default: "A much larger context window that can hold far more token material than early chat systems.",
+    boomer: "A much bigger desk that can hold many more paper slips at once."
+  },
+  compression: {
+    default: "Shortening earlier material so some of its meaning survives while using fewer tokens.",
+    boomer: "Making a brief summary note so the clerk does not have to keep every full page."
+  },
+  "conversation history": {
+    default: "Earlier turns in the exchange that remain available to the model.",
+    boomer: "The earlier office notes still pinned to the case file."
+  },
+  "document ingestion": {
+    default: "Pulling document text into the model's working context so it can be referenced in the answer.",
+    boomer: "Loading the folder pages onto the desk so the clerk can use them."
+  },
+  retrieval: {
+    default: "Fetching outside material and placing it into context instead of relying on memory alone.",
+    boomer: "Getting the right folder from the cabinet when the clerk needs it."
+  },
+  RAG: {
+    default: "Retrieval-augmented generation: answer generation supported by retrieved source material.",
+    boomer: "Writing the memo with fresh folder pages open beside the typewriter."
+  },
+  "knowledge cutoff": {
+    default: "The freshness limit of the model's built-in training knowledge.",
+    boomer: "The date when the office encyclopedia stopped getting updates."
+  },
+  grounding: {
+    default: "Tying the answer to supplied evidence instead of letting it float on unsupported guesses.",
+    boomer: "Keeping the memo pinned to the actual paperwork on the desk."
+  },
+  reasoning: {
+    default: "A mode where the model spends more work on planning or checking before it answers.",
+    boomer: "Extra scratch-pad thinking before the clerk sends the final memo."
+  },
+  "reasoning tokens": {
+    default: "Token budget spent on internal intermediate work rather than only on the visible answer.",
+    boomer: "The scratch-paper space the clerk uses before typing the clean copy."
+  },
+  deliberation: {
+    default: "Slower, more stepwise consideration before committing to an answer.",
+    boomer: "Taking a moment to sort the papers before speaking."
+  },
+  "task decomposition": {
+    default: "Breaking a bigger problem into smaller jobs with clearer objectives.",
+    boomer: "Splitting one messy office job into several smaller desk tasks."
+  },
+  CLI: {
+    default: "Command-line interface tools that expose files, commands, logs, and local project state.",
+    boomer: "The teletype-and-terminal side of the office where the real work printouts appear."
+  },
+  "terminal output": {
+    default: "The text returned by commands, including logs, errors, and status messages.",
+    boomer: "The paper coming back from the teletype machine."
+  },
+  "repo context": {
+    default: "The project files, structure, and history that give a coding task its local meaning.",
+    boomer: "The folder drawers and project paperwork for this particular case."
+  },
+  diffs: {
+    default: "Line-by-line changes showing what was added, removed, or edited in the codebase.",
+    boomer: "Red-pencil marks showing what changed on the page."
+  },
+  "AGENTS.md": {
+    default: "A repository file that stores durable instructions about how the local project should be handled.",
+    boomer: "The standing office memo clipped to the front of the project folder."
+  },
+  "persistent instructions": {
+    default: "Reusable guidance stored outside the current chat so it can be loaded again later.",
+    boomer: "House rules that stay posted instead of being repeated every morning."
+  },
+  "repo policy": {
+    default: "Project-specific rules about architecture, reviews, style, or workflow.",
+    boomer: "The local office rulebook for this file room."
+  },
+  "context assembly": {
+    default: "The act of choosing which instructions, files, and evidence go into the active window.",
+    boomer: "Picking which papers belong on the desk before the clerk starts."
+  },
+  MCP: {
+    default: "Model Context Protocol, a structured way for the model host to expose tools and resources.",
+    boomer: "The switchboard system for calling the records room in a standard way."
+  },
+  tools: {
+    default: "Callable actions such as commands, searches, or resource fetches that extend what the model can do.",
+    boomer: "Office machines and service buttons the clerk can use to get the job done."
+  },
+  resources: {
+    default: "External files or data returned to the model when needed.",
+    boomer: "Folders, cards, or reports pulled in from another room."
+  },
+  "dynamic context": {
+    default: "Context that is fetched or assembled at runtime instead of pasted all at once up front.",
+    boomer: "Desk material that gets brought in as the job unfolds."
+  },
+  skills: {
+    default: "Compact reusable instructions and references tuned for a recurring kind of task.",
+    boomer: "Ready-made procedure cards for common office jobs."
+  },
+  plugins: {
+    default: "Broader bundles that can package skills, tools, assets, and supporting configuration together.",
+    boomer: "Larger office kits that bring procedure cards, tools, and cabinet keys in one bundle."
+  },
+  vocabulary: {
+    default: "Task-specific terms that steer the model toward the right domain and workflow.",
+    boomer: "Shop words that tell the clerk which line of work this belongs to."
+  },
+  "reusable context": {
+    default: "High-value instructions or references that can be loaded across many similar tasks.",
+    boomer: "Useful office packets you can pull off the shelf again and again."
+  },
+  hooks: {
+    default: "Automatic steps that run before or after the main task to enforce checks or side work.",
+    boomer: "Automatic checklist steps wired around the clerk's main assignment."
+  },
+  validation: {
+    default: "Checking whether the output meets rules, tests, or acceptance criteria.",
+    boomer: "Inspecting the finished page to make sure it follows the office rules."
+  },
+  automation: {
+    default: "Work that runs automatically so the model does not have to remember every repetitive step.",
+    boomer: "A machine-driven helper that handles the routine paperwork by itself."
+  },
+  guardrails: {
+    default: "Built-in limits or checks that keep the workflow inside approved behavior.",
+    boomer: "Safety rails that keep the clerk from wandering off the approved track."
+  },
+  subagents: {
+    default: "Smaller task-specific workers that each get a narrower prompt and cleaner objective.",
+    boomer: "Special clerks who each handle one smaller packet instead of one person juggling everything."
+  },
+  handoffs: {
+    default: "The artifacts or messages passed from one worker to the next.",
+    boomer: "The memos one clerk slides across the desk to another."
+  },
+  artifacts: {
+    default: "Named outputs such as briefs, reports, code changes, or checklists that can be reviewed.",
+    boomer: "The actual paperwork each clerk hands back when the job is done."
+  }
+};
 
 const milestones = [
   {
@@ -246,7 +459,7 @@ const milestones = [
     id: "cli",
     year: "2024-2025",
     era: "Tools in the loop",
-    title: "CLI Tools Bring LLMs Into Real Work",
+    title: "Command-Line Tools (CLI) Bring LLMs Into Real Work",
     whatChanged:
       "The model stopped being just a chat partner and started operating inside real files, commands, and local project context.",
     body:
@@ -279,9 +492,9 @@ const milestones = [
     id: "agentsmd",
     year: "2025",
     era: "Intent made explicit",
-    title: "AGENTS.md",
+    title: "Repo Instruction Files (AGENTS.md)",
     whatChanged:
-      "Teams started storing durable instructions near the work itself so the model could load project-specific behavior without rewriting it every session.",
+      "Teams started storing durable repo instructions near the work itself so the model could load project-specific behavior without rewriting it every session.",
     body:
       "AGENTS.md is a practical answer to repeated setup cost. Instead of spending valuable prompt tokens restating the same norms, repository instructions can define architecture expectations, coding rules, review standards, and local conventions. That shifts some context assembly from memory to files.",
     boomerBody:
@@ -312,9 +525,9 @@ const milestones = [
     id: "mcp",
     year: "2024-2025",
     era: "Connected systems",
-    title: "MCPs Connect External Systems",
+    title: "Tool Switchboards (MCPs) Connect External Systems",
     whatChanged:
-      "The model gained a cleaner way to ask for outside resources and tools instead of pretending everything had to be pasted manually.",
+      "The model gained a cleaner way to ask for outside tools and resources instead of pretending everything had to be pasted manually.",
     body:
       "Model Context Protocol shifts context gathering into a structured interface. Rather than dumping every possible document into the prompt, the model or its host can request the specific resource it needs. This makes context assembly more dynamic, targeted, and tool-like.",
     boomerBody:
@@ -591,10 +804,12 @@ const elements = {
   conceptGrid: document.getElementById("concept-grid"),
   timelineCards: document.getElementById("timeline-cards"),
   glossaryPanel: document.getElementById("glossary-panel"),
+  glossaryLede: document.getElementById("glossary-lede"),
   tokenRack: document.getElementById("token-rack"),
   incomingItems: document.getElementById("incoming-items"),
   overflowItems: document.getElementById("overflow-items"),
   windowRing: document.getElementById("window-ring"),
+  orbitLayer: document.getElementById("orbit-layer"),
   windowMeterFill: document.getElementById("window-meter-fill"),
   boomerButton: document.getElementById("boomer-button"),
   heroEyebrow: document.getElementById("hero-eyebrow"),
@@ -617,14 +832,48 @@ const elements = {
   modelSeesCopy: document.getElementById("model-sees-copy"),
   windowMattersCopy: document.getElementById("window-matters-copy"),
   windowStat: document.getElementById("window-stat"),
-  tokenStat: document.getElementById("token-stat")
+  tokenStat: document.getElementById("token-stat"),
+  closingEyebrow: document.getElementById("closing-eyebrow"),
+  closingTitle: document.getElementById("closing-title"),
+  closingLede: document.getElementById("closing-lede"),
+  closingPoint1Title: document.getElementById("closing-point-1-title"),
+  closingPoint1Copy: document.getElementById("closing-point-1-copy"),
+  closingPoint2Title: document.getElementById("closing-point-2-title"),
+  closingPoint2Copy: document.getElementById("closing-point-2-copy"),
+  closingPoint3Title: document.getElementById("closing-point-3-title"),
+  closingPoint3Copy: document.getElementById("closing-point-3-copy")
 };
 
+const BOOMER_MODE_STORAGE_KEY = "llm-timeline-boomer-mode";
 let boomerMode = false;
 let activeId = milestones[0].id;
 const cardMap = new Map();
 let itemSwapTimer;
 let scrollTicking = false;
+const reducedMotionQuery =
+  typeof window.matchMedia === "function"
+    ? window.matchMedia("(prefers-reduced-motion: reduce)")
+    : null;
+
+function prefersReducedMotion() {
+  return reducedMotionQuery ? reducedMotionQuery.matches : false;
+}
+
+function loadStoredBoomerMode() {
+  try {
+    return window.localStorage.getItem(BOOMER_MODE_STORAGE_KEY) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function saveStoredBoomerMode() {
+  try {
+    window.localStorage.setItem(BOOMER_MODE_STORAGE_KEY, String(boomerMode));
+  } catch {
+    // Ignore storage failures; the toggle still works for the current session.
+  }
+}
 
 function renderConcepts() {
   elements.conceptGrid.innerHTML = concepts
@@ -644,6 +893,7 @@ function cardMarkup(item) {
   const body = boomerMode ? item.boomerBody : item.body;
   const sees = boomerMode ? item.boomerSees : item.sees;
   const windowCopy = boomerMode ? item.boomerWindow : item.window;
+  const visual = milestoneVisuals[item.id];
   const tagMarkup = item.glossary
     .map((tag) => `<span class="timeline-card__tag">${tag}</span>`)
     .join("");
@@ -653,6 +903,14 @@ function cardMarkup(item) {
     <h3>${item.title}</h3>
     <p class="timeline-card__what-changed">${item.whatChanged}</p>
     <p class="timeline-card__body">${body}</p>
+    <div class="timeline-card__objective">
+      <p class="timeline-card__objective-label">${
+        boomerMode ? "What the clerk is trying to do" : "What the model is trying to do"
+      }</p>
+      <p class="timeline-card__objective-copy">${
+        boomerMode ? visual.boomerObjective : visual.objective
+      }</p>
+    </div>
     <div class="timeline-card__explainers">
       <article class="timeline-card__explainer">
         <h4>${boomerMode ? "What the machine has on the desk" : "What the model sees"}</h4>
@@ -677,6 +935,7 @@ function renderTimeline() {
     article.id = `milestone-${item.id}`;
     article.dataset.milestoneId = item.id;
     article.tabIndex = 0;
+    article.setAttribute("aria-label", `${item.year}. ${item.title}`);
     article.innerHTML = cardMarkup(item);
     article.addEventListener("focus", () => activateMilestone(item.id));
     article.addEventListener("mouseenter", () => activateMilestone(item.id));
@@ -687,8 +946,47 @@ function renderTimeline() {
 
 function renderGlossary(item) {
   elements.glossaryPanel.innerHTML = item.glossary
-    .map((term) => `<span class="glossary-chip">${term}</span>`)
+    .map((term) => {
+      const definition = glossaryDefinitions[term];
+      const copy = definition
+        ? boomerMode
+          ? definition.boomer
+          : definition.default
+        : "See the active milestone for the plain-language definition.";
+
+      return `
+        <article class="glossary-chip">
+          <span class="glossary-chip__term">${term}</span>
+          <p class="glossary-chip__copy">${copy}</p>
+        </article>
+      `;
+    })
     .join("");
+}
+
+function renderOrbitObjects(item) {
+  elements.orbitLayer.innerHTML = item.orbitObjects
+    .map(
+      (object) => `
+        <span
+          class="orbit-object"
+          style="
+            --orbit-x:${object.x};
+            --orbit-y:${object.y};
+            --orbit-start-x:${object.startX};
+            --orbit-start-y:${object.startY};
+            border-color:${item.accent}66;
+          "
+        >${object.label}</span>
+      `
+    )
+    .join("");
+
+  requestAnimationFrame(() => {
+    elements.orbitLayer.querySelectorAll(".orbit-object").forEach((object) => {
+      object.classList.add("is-visible");
+    });
+  });
 }
 
 function renderTokenRack(item) {
@@ -726,6 +1024,17 @@ function renderIncomingItems(item) {
     chip.classList.remove("is-visible");
     chip.classList.add("is-exiting");
   });
+
+  if (prefersReducedMotion()) {
+    elements.incomingItems.innerHTML = labels
+      .map(
+        (label) => `
+          <span class="context-chip is-visible" style="border-color:${item.accent}55">${label}</span>
+        `
+      )
+      .join("");
+    return;
+  }
 
   itemSwapTimer = window.setTimeout(() => {
     elements.incomingItems.innerHTML = labels
@@ -768,11 +1077,22 @@ function renderUiCopy() {
   elements.overflowTitle.textContent = copy.overflowTitle;
   elements.modelSeesTitle.textContent = copy.modelSeesTitle;
   elements.windowMattersTitle.textContent = copy.windowMattersTitle;
+  elements.glossaryLede.textContent = copy.glossaryLede;
+  elements.closingEyebrow.textContent = copy.closingEyebrow;
+  elements.closingTitle.textContent = copy.closingTitle;
+  elements.closingLede.textContent = copy.closingLede;
+  elements.closingPoint1Title.textContent = copy.closingPoints[0].title;
+  elements.closingPoint1Copy.textContent = copy.closingPoints[0].body;
+  elements.closingPoint2Title.textContent = copy.closingPoints[1].title;
+  elements.closingPoint2Copy.textContent = copy.closingPoints[1].body;
+  elements.closingPoint3Title.textContent = copy.closingPoints[2].title;
+  elements.closingPoint3Copy.textContent = copy.closingPoints[2].body;
 }
 
 function updateCardStates() {
   cardMap.forEach((card, id) => {
     card.classList.toggle("is-active", id === activeId);
+    card.setAttribute("aria-current", id === activeId ? "true" : "false");
   });
 }
 
@@ -799,6 +1119,7 @@ function activateMilestone(id) {
   elements.windowMattersCopy.textContent = boomerMode ? item.boomerWindow : item.window;
 
   renderGlossary(item);
+  renderOrbitObjects(item);
   renderTokenRack(item);
   renderIncomingItems(item);
   renderOverflow(item);
@@ -856,9 +1177,11 @@ function syncMode() {
 
 elements.boomerButton.addEventListener("click", () => {
   boomerMode = !boomerMode;
+  saveStoredBoomerMode();
   syncMode();
 });
 
+boomerMode = loadStoredBoomerMode();
 renderUiCopy();
 renderConcepts();
 renderTimeline();

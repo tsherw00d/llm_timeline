@@ -48,7 +48,36 @@
               </p>
             </div>
 
-            <section class="concept-grid" id="concept-grid" aria-label="Core concepts"></section>
+            <section class="concept-grid" id="concept-grid" aria-label="Core concepts">
+              <article class="concept-card" id="concept-tokens">
+                <h3>Tokens</h3>
+                <p>
+                  Tokens are bite-sized word pieces. Billing, memory use, and model limits
+                  are usually counted in tokens, not words.
+                </p>
+              </article>
+              <article class="concept-card" id="concept-window">
+                <h3>Context Window</h3>
+                <p>
+                  The context window is the finite amount of token material the model can
+                  actively consider in one pass.
+                </p>
+              </article>
+              <article class="concept-card" id="concept-cutoff">
+                <h3>Cutoff Date</h3>
+                <p>
+                  A cutoff date marks how recent the model's built-in training knowledge is.
+                  New facts usually need live tools or retrieved documents.
+                </p>
+              </article>
+              <article class="concept-card" id="concept-parameters">
+                <h3>Parameters</h3>
+                <p>
+                  Parameters are the learned weights inside the model. User controls can
+                  steer behavior, but they do not rewrite those weights on the fly.
+                </p>
+              </article>
+            </section>
 
             <section class="context-core" aria-labelledby="core-visual-title">
               <div class="context-core__header">
@@ -67,24 +96,114 @@
                       These are the items currently earning space in the window.
                     </p>
                   </div>
-                  <div class="flow-lane__items" id="incoming-items" aria-live="polite"></div>
+                  <div class="flow-lane__items" id="incoming-items" aria-live="polite">
+                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
+                      >system framing</span
+                    >
+                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
+                      >chat history</span
+                    >
+                    <span class="context-chip is-visible" style="border-color: #f3b74b55"
+                      >user prompt</span
+                    >
+                  </div>
                 </div>
 
                 <div class="window-stage">
                   <div class="window-stage__summary">
                     <p class="flow-label" id="window-stage-label">Inside the window now</p>
                     <div class="window-meter" aria-hidden="true">
-                      <div class="window-meter__fill" id="window-meter-fill"></div>
+                      <div
+                        class="window-meter__fill"
+                        id="window-meter-fill"
+                        style="width: 70%"
+                      ></div>
                     </div>
                     <p class="flow-caption" id="window-stage-note">
-                      Useful context fills the window. Irrelevant material stays out.
+                      High-value context is using about 70% of the available window right now.
                     </p>
                   </div>
 
                   <div class="core-visual__shell">
-                    <div class="core-visual__ring" id="window-ring"></div>
+                    <div
+                      class="core-visual__ring"
+                      id="window-ring"
+                      style="--window-scale: 0.76"
+                    ></div>
+                    <div class="orbit-layer" id="orbit-layer" aria-hidden="true">
+                      <span
+                        class="orbit-object is-visible"
+                        style="
+                          --orbit-x: -8rem;
+                          --orbit-y: -6rem;
+                          --orbit-start-x: -14rem;
+                          --orbit-start-y: -12rem;
+                          border-color: #f3b74b66;
+                        "
+                        >user prompt</span
+                      >
+                      <span
+                        class="orbit-object is-visible"
+                        style="
+                          --orbit-x: 8rem;
+                          --orbit-y: -4rem;
+                          --orbit-start-x: 15rem;
+                          --orbit-start-y: -11rem;
+                          border-color: #f3b74b66;
+                        "
+                        >assistant reply</span
+                      >
+                      <span
+                        class="orbit-object is-visible"
+                        style="
+                          --orbit-x: 0rem;
+                          --orbit-y: 7rem;
+                          --orbit-start-x: 0rem;
+                          --orbit-start-y: 14rem;
+                          border-color: #f3b74b66;
+                        "
+                        >system framing</span
+                      >
+                    </div>
                     <div class="core-visual__inner">
-                      <div class="token-rack" id="token-rack" aria-hidden="true"></div>
+                      <div class="token-rack" id="token-rack" aria-hidden="true">
+                        <div class="window-segment">
+                          <div class="window-segment__head">
+                            <span class="window-segment__label">system framing</span>
+                            <span class="window-segment__value">20%</span>
+                          </div>
+                          <div class="window-segment__track">
+                            <div
+                              class="window-segment__fill window-segment__fill--instruction"
+                              style="--segment-width: 20%"
+                            ></div>
+                          </div>
+                        </div>
+                        <div class="window-segment">
+                          <div class="window-segment__head">
+                            <span class="window-segment__label">chat history</span>
+                            <span class="window-segment__value">45%</span>
+                          </div>
+                          <div class="window-segment__track">
+                            <div
+                              class="window-segment__fill window-segment__fill--memory"
+                              style="--segment-width: 45%"
+                            ></div>
+                          </div>
+                        </div>
+                        <div class="window-segment">
+                          <div class="window-segment__head">
+                            <span class="window-segment__label">user prompt</span>
+                            <span class="window-segment__value">35%</span>
+                          </div>
+                          <div class="window-segment__track">
+                            <div
+                              class="window-segment__fill window-segment__fill--task"
+                              style="--segment-width: 35%"
+                            ></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -93,23 +212,34 @@
                   <div class="flow-lane__header">
                     <p class="flow-label" id="objective-label">Current job</p>
                   </div>
-                  <div class="objective-pill" id="objective-pill"></div>
+                  <div class="objective-pill" id="objective-pill">
+                    Hold the conversation together long enough to answer the latest request.
+                  </div>
                 </div>
 
                 <div class="overflow-bin">
                   <p class="overflow-bin__title" id="overflow-title">Outside the window</p>
-                  <div class="overflow-bin__items" id="overflow-items"></div>
+                  <div class="overflow-bin__items" id="overflow-items">
+                    <span class="overflow-chip">older turns</span>
+                    <span class="overflow-chip">long attachments</span>
+                  </div>
                 </div>
               </div>
 
               <div class="context-core__notes">
                 <article class="note-card">
                   <h3 id="model-sees-title">What the model sees</h3>
-                  <p id="model-sees-copy"></p>
+                  <p id="model-sees-copy">
+                    The model sees the chat transcript that still fits in the window: your
+                    latest request plus some earlier turns, chopped into tokens.
+                  </p>
                 </article>
                 <article class="note-card">
                   <h3 id="window-matters-title">Why the window matters</h3>
-                  <p id="window-matters-copy"></p>
+                  <p id="window-matters-copy">
+                    When the early window fills up, old instructions fall away or get
+                    compressed. That is why early chat sessions could lose the thread.
+                  </p>
                 </article>
               </div>
             </section>
@@ -117,18 +247,651 @@
             <section class="glossary-panel" aria-labelledby="glossary-title">
               <div class="glossary-panel__header">
                 <p class="eyebrow">Active vocabulary</p>
-                <h3 id="glossary-title">Terms in play</h3>
+                <div>
+                  <h3 id="glossary-title">Terms in play</h3>
+                  <p class="glossary-panel__lede" id="glossary-lede">
+                    Each term is restated in plain language before the jargon gets reused.
+                  </p>
+                </div>
               </div>
-              <div class="glossary-panel__chips" id="glossary-panel"></div>
+              <div class="glossary-panel__chips" id="glossary-panel">
+                <article class="glossary-chip">
+                  <span class="glossary-chip__term">tokens</span>
+                  <p class="glossary-chip__copy">
+                    Tiny chunks of text the model counts and processes, often smaller than
+                    full words.
+                  </p>
+                </article>
+                <article class="glossary-chip">
+                  <span class="glossary-chip__term">context window</span>
+                  <p class="glossary-chip__copy">
+                    The total token space the model can actively pay attention to in one pass.
+                  </p>
+                </article>
+                <article class="glossary-chip">
+                  <span class="glossary-chip__term">cutoff date</span>
+                  <p class="glossary-chip__copy">
+                    The point after which the model's built-in training knowledge stops being
+                    reliably current.
+                  </p>
+                </article>
+                <article class="glossary-chip">
+                  <span class="glossary-chip__term">chat transcript</span>
+                  <p class="glossary-chip__copy">
+                    The running conversation history that still fits inside the current
+                    window.
+                  </p>
+                </article>
+              </div>
             </section>
           </div>
         </aside>
 
         <section class="timeline" aria-label="LLM timeline">
           <div class="timeline__rail" aria-hidden="true"></div>
-          <div class="timeline__cards" id="timeline-cards"></div>
+          <div class="timeline__cards" id="timeline-cards">
+            <article
+              class="timeline-card is-active"
+              id="milestone-chatgpt35"
+              data-milestone-id="chatgpt35"
+              tabindex="0"
+              aria-label="2022.11. ChatGPT 3.5"
+              aria-current="true"
+            >
+              <p class="timeline-card__era">2022.11 · ChatGPT lands</p>
+              <h3>ChatGPT 3.5</h3>
+              <p class="timeline-card__what-changed">
+                A chat box made a general-purpose LLM feel like a tool regular people could
+                actually use.
+              </p>
+              <p class="timeline-card__body">
+                On November 30, 2022, the big shift was interface, not magic. People
+                discovered that if they placed the right tokens into a conversation, the
+                model could draft, summarize, rewrite, and answer in a surprisingly useful
+                way. It also made the limits visible: the model only had a modest amount of
+                working room and a fixed knowledge cutoff.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Hold the conversation together long enough to answer the latest request.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees the chat transcript that still fits in the window: your
+                    latest request plus some earlier turns, chopped into tokens.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    When the early window fills up, old instructions fall away or get
+                    compressed. That is why early chat sessions could lose the thread.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">tokens</span>
+                <span class="timeline-card__tag">context window</span>
+                <span class="timeline-card__tag">cutoff date</span>
+                <span class="timeline-card__tag">chat transcript</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-prompting"
+              data-milestone-id="prompting"
+              tabindex="0"
+              aria-label="2023. Prompt Engineering Becomes a Discipline"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2023 · Prompt engineering</p>
+              <h3>Prompt Engineering Becomes a Discipline</h3>
+              <p class="timeline-card__what-changed">
+                Users learned that the quality of the input tokens often mattered more than
+                the model's mystique.
+              </p>
+              <p class="timeline-card__body">
+                Prompt engineering turned fuzzy requests into structured instructions: role,
+                task, constraints, examples, desired format. The key lesson was practical
+                and enduring. If you want better output, spend effort arranging the input
+                tokens so the model can infer the job clearly.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Infer the job from clearer instructions, examples, and output rules.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees better-organized tokens: clearer instructions, examples,
+                    delimiters, and formatting cues that reduce ambiguity.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    A good prompt uses scarce window space wisely. Every unnecessary token is
+                    room you cannot spend on examples, retrieved facts, or output budget.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">prompt engineering</span>
+                <span class="timeline-card__tag">few-shot examples</span>
+                <span class="timeline-card__tag">constraints</span>
+                <span class="timeline-card__tag">formatting cues</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-long-context"
+              data-milestone-id="long-context"
+              tabindex="0"
+              aria-label="2023.11. Context Windows Stretch"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2023.11 · Longer windows</p>
+              <h3>Context Windows Stretch</h3>
+              <p class="timeline-card__what-changed">
+                Much larger windows meant the model could consider longer conversations,
+                larger documents, and more detailed instructions at once.
+              </p>
+              <p class="timeline-card__body">
+                This did not make the model all-knowing. It changed the size of the
+                workbench. Larger context meant more source material, broader history, and
+                fewer forced summaries between steps. It also made context management a
+                first-class skill because window space, while larger, was still finite and
+                expensive.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Balance longer history, larger documents, and richer instructions in one
+                  pass.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees more tokens before it must drop or compress material,
+                    which allows longer documents and richer instruction sets to coexist.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Longer windows reduce forgetting, but they also invite clutter. Bigger
+                    windows help only when the added tokens are relevant.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">128K context</span>
+                <span class="timeline-card__tag">compression</span>
+                <span class="timeline-card__tag">conversation history</span>
+                <span class="timeline-card__tag">document ingestion</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-retrieval"
+              data-milestone-id="retrieval"
+              tabindex="0"
+              aria-label="2023-2024. Retrieval Beats Pretending the Model Knows Everything"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2023-2024 · Cutoff meets retrieval</p>
+              <h3>Retrieval Beats Pretending the Model Knows Everything</h3>
+              <p class="timeline-card__what-changed">
+                People stopped treating cutoff dates as a footnote and started fetching
+                fresh documents into context on purpose.
+              </p>
+              <p class="timeline-card__body">
+                Retrieval changed the job from 'remember everything' to 'pull the right
+                evidence into the window at the right moment.' Instead of hoping the model's
+                training knew the answer, teams began supplying current documentation,
+                policies, manuals, tickets, and database results as extra tokens.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Answer using fresh evidence pulled into the window right when it is needed.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees quoted or retrieved passages placed directly into the
+                    prompt, often with source labels and instructions about how to use them.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Retrieval spends context window space on evidence. The tradeoff is
+                    simple: every source you add must earn its place because tokens used on
+                    stale or irrelevant text crowd out better material.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">retrieval</span>
+                <span class="timeline-card__tag">RAG</span>
+                <span class="timeline-card__tag">knowledge cutoff</span>
+                <span class="timeline-card__tag">grounding</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-reasoning"
+              data-milestone-id="reasoning"
+              tabindex="0"
+              aria-label="2024-2025. Thinking and Reasoning Tokens"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2024-2025 · Reasoning workflows</p>
+              <h3>Thinking and Reasoning Tokens</h3>
+              <p class="timeline-card__what-changed">
+                Reasoning-focused models made it more explicit that some work happens in
+                hidden intermediate thinking before the final answer is returned.
+              </p>
+              <p class="timeline-card__body">
+                This reframed user expectations. The model was no longer just producing a
+                quick surface completion. It could spend extra computation on planning,
+                decomposition, or checking before speaking. That does not remove token
+                economics. It adds another layer of budget and makes task framing even more
+                important.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Spend extra internal work on planning and checking before replying.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model still sees prompts, tool results, and prior context. The
+                    difference is that it may consume extra internal reasoning budget before
+                    producing the outward reply.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Reasoning helps most when the context is clean. If the prompt is muddy or
+                    the window is cluttered, extra thinking can still chase the wrong
+                    objective.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">reasoning</span>
+                <span class="timeline-card__tag">reasoning tokens</span>
+                <span class="timeline-card__tag">deliberation</span>
+                <span class="timeline-card__tag">task decomposition</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-cli"
+              data-milestone-id="cli"
+              tabindex="0"
+              aria-label="2024-2025. Command-Line Tools (CLI) Bring LLMs Into Real Work"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2024-2025 · Tools in the loop</p>
+              <h3>Command-Line Tools (CLI) Bring LLMs Into Real Work</h3>
+              <p class="timeline-card__what-changed">
+                The model stopped being just a chat partner and started operating inside real
+                files, commands, and local project context.
+              </p>
+              <p class="timeline-card__body">
+                CLI-based workflows matter because they expand the model's usable input with
+                actual working artifacts: repository files, terminal output, logs, tests,
+                and diffs. The model still acts on tokens, but those tokens now come from
+                the real environment instead of only a pasted prompt.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Work against real files, commands, and outputs instead of only a pasted
+                  prompt.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees code, command output, error messages, configuration files,
+                    and your instructions all mixed into a richer working context.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    CLI workflows make context selection more important, not less. Raw
+                    terminal spam can waste tokens quickly, so good tools summarize, filter,
+                    and target what gets shown.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">CLI</span>
+                <span class="timeline-card__tag">terminal output</span>
+                <span class="timeline-card__tag">repo context</span>
+                <span class="timeline-card__tag">diffs</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-agentsmd"
+              data-milestone-id="agentsmd"
+              tabindex="0"
+              aria-label="2025. Repo Instruction Files (AGENTS.md)"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2025 · Intent made explicit</p>
+              <h3>Repo Instruction Files (AGENTS.md)</h3>
+              <p class="timeline-card__what-changed">
+                Teams started storing durable repo instructions near the work itself so the
+                model could load project-specific behavior without rewriting it every
+                session.
+              </p>
+              <p class="timeline-card__body">
+                AGENTS.md is a practical answer to repeated setup cost. Instead of spending
+                valuable prompt tokens restating the same norms, repository instructions can
+                define architecture expectations, coding rules, review standards, and local
+                conventions. That shifts some context assembly from memory to files.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Start from durable project instructions instead of restating norms every
+                  session.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees a stable instruction file alongside the immediate task,
+                    which improves consistency across sessions and users.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Persistent instruction files save attention, but they still consume
+                    tokens when loaded. Good AGENTS.md files are concise, specific, and worth
+                    the space they take up.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">AGENTS.md</span>
+                <span class="timeline-card__tag">persistent instructions</span>
+                <span class="timeline-card__tag">repo policy</span>
+                <span class="timeline-card__tag">context assembly</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-mcp"
+              data-milestone-id="mcp"
+              tabindex="0"
+              aria-label="2024-2025. Tool Switchboards (MCPs) Connect External Systems"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2024-2025 · Connected systems</p>
+              <h3>Tool Switchboards (MCPs) Connect External Systems</h3>
+              <p class="timeline-card__what-changed">
+                The model gained a cleaner way to ask for outside tools and resources instead
+                of pretending everything had to be pasted manually.
+              </p>
+              <p class="timeline-card__body">
+                Model Context Protocol shifts context gathering into a structured interface.
+                Rather than dumping every possible document into the prompt, the model or its
+                host can request the specific resource it needs. This makes context assembly
+                more dynamic, targeted, and tool-like.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Request the right external resource at the moment it becomes relevant.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees the resources returned by the protocol plus the tool
+                    schema that tells it what can be requested.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    MCP does not abolish the context window. It helps choose better material
+                    to place inside it, at the moment it is needed.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">MCP</span>
+                <span class="timeline-card__tag">tools</span>
+                <span class="timeline-card__tag">resources</span>
+                <span class="timeline-card__tag">dynamic context</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-skills-plugins"
+              data-milestone-id="skills-plugins"
+              tabindex="0"
+              aria-label="2025. Skills and Plugins Package Reusable Context"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2025 · Packaged know-how</p>
+              <h3>Skills and Plugins Package Reusable Context</h3>
+              <p class="timeline-card__what-changed">
+                Reusable capability bundles let teams stop rebuilding the same instructions,
+                references, and tool integrations from scratch.
+              </p>
+              <p class="timeline-card__body">
+                A skill is basically a compact playbook. A plugin is a broader bundle that
+                can package skills, tools, and supporting assets. Both are ways to preload
+                high-value context so the model starts closer to the job instead of burning
+                tokens rediscovering the workflow every time.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Begin with a reusable job packet instead of rebuilding workflow context
+                  from scratch.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees a shaped starting context: targeted instructions,
+                    specialized vocabulary, bundled references, and permitted tool paths.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Reusable packages help only when they are tight. Bloated skills and
+                    plugins waste window space just as surely as bad prompts do.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">skills</span>
+                <span class="timeline-card__tag">plugins</span>
+                <span class="timeline-card__tag">vocabulary</span>
+                <span class="timeline-card__tag">reusable context</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-hooks"
+              data-milestone-id="hooks"
+              tabindex="0"
+              aria-label="2025. Hooks Add Automatic Checks Around the Work"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2025 · Guardrails and automation</p>
+              <h3>Hooks Add Automatic Checks Around the Work</h3>
+              <p class="timeline-card__what-changed">
+                Before-and-after automations started shaping the workflow so the model did
+                not have to remember every check manually.
+              </p>
+              <p class="timeline-card__body">
+                Hooks move some discipline out of the conversational layer and into the
+                runtime. That matters because token-based systems are fallible at rote
+                repetition. If formatting, validation, or auditing can happen automatically
+                around the model, the model can spend more of its context budget on
+                reasoning about the real task.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Let automation handle repetitive checks so model attention stays on the
+                  real task.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    The model sees the task plus whatever hook outputs are added back into
+                    the loop, such as validation results or policy checks.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Hooks keep repetitive rules out of the prompt, but their outputs still
+                    enter the window if they are relevant. Good hook design keeps those
+                    outputs short and actionable.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">hooks</span>
+                <span class="timeline-card__tag">validation</span>
+                <span class="timeline-card__tag">automation</span>
+                <span class="timeline-card__tag">guardrails</span>
+              </div>
+            </article>
+
+            <article
+              class="timeline-card"
+              id="milestone-subagents"
+              data-milestone-id="subagents"
+              tabindex="0"
+              aria-label="2025-2026. Subagents Split the Work Without Changing the Core Rule"
+              aria-current="false"
+            >
+              <p class="timeline-card__era">2025-2026 · Coordinated workflows</p>
+              <h3>Subagents Split the Work Without Changing the Core Rule</h3>
+              <p class="timeline-card__what-changed">
+                Complex jobs began to be decomposed into smaller task-specific workers, each
+                with its own tighter context and objective.
+              </p>
+              <p class="timeline-card__body">
+                Subagents matter because they replace one overloaded prompt with several
+                focused contexts. Each worker sees a smaller slice, does one bounded job,
+                and hands back an artifact. The breakthrough is not that the model became
+                superhuman. It is that teams got better at dividing work so each context
+                window carries less clutter.
+              </p>
+              <div class="timeline-card__objective">
+                <p class="timeline-card__objective-label">What the model is trying to do</p>
+                <p class="timeline-card__objective-copy">
+                  Split one overloaded problem into smaller contexts with cleaner handoffs.
+                </p>
+              </div>
+              <div class="timeline-card__explainers">
+                <article class="timeline-card__explainer">
+                  <h4>What the model sees</h4>
+                  <p>
+                    Each subagent sees a narrower prompt, a smaller artifact set, and a more
+                    specific goal than a giant do-everything agent would.
+                  </p>
+                </article>
+                <article class="timeline-card__explainer">
+                  <h4>Why the context window matters</h4>
+                  <p>
+                    Subagents are really a context management strategy. They work when
+                    handoffs are clear and fail when every worker gets bloated context or
+                    vague instructions.
+                  </p>
+                </article>
+              </div>
+              <div class="timeline-card__footer">
+                <span class="timeline-card__tag">subagents</span>
+                <span class="timeline-card__tag">handoffs</span>
+                <span class="timeline-card__tag">artifacts</span>
+                <span class="timeline-card__tag">task decomposition</span>
+              </div>
+            </article>
+          </div>
         </section>
       </main>
+
+      <section class="closing-frame" aria-labelledby="closing-title">
+        <p class="eyebrow" id="closing-eyebrow">Closing frame</p>
+        <h2 id="closing-title">Modern LLM work is context engineering in public.</h2>
+        <p class="closing-frame__lede" id="closing-lede">
+          Better tools do not repeal token limits. They help people choose, shape, and hand
+          off the right context more deliberately.
+        </p>
+        <div class="closing-frame__grid">
+          <article class="closing-note">
+            <h3 id="closing-point-1-title">The limit never left</h3>
+            <p id="closing-point-1-copy">
+              Long windows, retrieval, tools, and agents all work by managing what enters
+              the model's finite working set.
+            </p>
+          </article>
+          <article class="closing-note">
+            <h3 id="closing-point-2-title">Workflow beats mystique</h3>
+            <p id="closing-point-2-copy">
+              Strong results usually come from clearer prompts, tighter evidence, smaller
+              tasks, and cleaner handoffs rather than magic hidden powers.
+            </p>
+          </article>
+          <article class="closing-note">
+            <h3 id="closing-point-3-title">The core mechanism is still simple</h3>
+            <p id="closing-point-3-copy">
+              Even when the surrounding system looks sophisticated, the model is still
+              producing tokens from the context it can currently see.
+            </p>
+          </article>
+        </div>
+      </section>
     </div>
 
     <noscript>
